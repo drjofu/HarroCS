@@ -1,4 +1,5 @@
 ﻿//using io= System.IO;
+using ConsoleApp1;
 using System.Collections.Generic;
 using System.IO;
 //using System;
@@ -76,6 +77,21 @@ Console.WriteLine($"{t1,-10} {t2}");
 
 //io.File.Delete("x.abc");
 File.Delete("x.abc");
+
+Console.WriteLine("*****************************");
+Console.WriteLine();
+
+Längenmaß lm = new Längenmaß();
+lm.LängeInMeter = 10;
+Console.WriteLine(lm.LängeInMillimeter);
+Console.WriteLine(lm.LängeInZoll);
+
+lm.LängeInZoll = 100;
+Console.WriteLine(lm.LängeInMillimeter);
+Console.WriteLine(lm.LängeInMeter);
+
+//Konto k = new Konto(123, "ich");
+Konto k = Konto.KontoAnlegen(123, "ich");
 
 Console.ReadLine();
 
