@@ -68,7 +68,7 @@ konten.FindAll(k => k.Saldo > 0).Ausgeben("Saldo > 0");
 var erg = konten
   .Where(k => k.Saldo > 0)
   .OrderByDescending(k => k.Saldo)
-  .Select(k => new {  k.Inhaber, Zinsen= k.Saldo * 0.03 })
+  .Select(k => new { k.Inhaber, Zinsen = k.Saldo * 0.03 })
   .ToList();
 
 erg.Ausgeben("via Linq-Erweiterungsmethoden");
@@ -78,13 +78,34 @@ erg.Ausgeben("via Linq-Erweiterungsmethoden");
 //                  .Where(k => k.Inhaber == "Dagobert")
 //                  .First();
 
-kontoDagobert = konten.FirstOrDefault(k => k.Inhaber == "Dagobert");
+//kontoDagobert = konten.FirstOrDefault(k => k.Inhaber == "Dagobert");
+
+kontoDagobert = konten.SingleOrDefault(k => k.Inhaber == "Dagobert");
 
 
 Console.WriteLine($"gefunden: {kontoDagobert?.ToString() ?? "nichts"}");
 
+var summe = konten.Sum(k => k.Saldo);
+Console.WriteLine(summe);
 
+var gruppen = konten.GroupBy(k => k.Inhaber[0]);
+foreach (var gruppe in gruppen)
+{
+  Console.WriteLine($"{gruppe.Key}");
+  foreach (var konto in gruppe)
+  {
+    Console.WriteLine($"  {konto}");
+  }
+}
 
+// LINQ (Language integrated query)
+var erg2 = (from k in konten
+            where k.Inhaber.StartsWith("T")
+            orderby k.Inhaber
+            select new { k.Inhaber, k.Saldo })
+           .ToList();
+
+erg2.Ausgeben("Query-Syntax");
 
 //Console.WriteLine(erg.GetType().Name);
 //konten.Ausgeben();
